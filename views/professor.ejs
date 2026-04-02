@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Professor Page</title>
+    <style>
+        table {
+            border-collapse: collapse; 
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+        }
+        form {
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Professor Dashboard</h1>
+
+    <h3>Create a New Assignment</h3>
+    <form action="/add-assignment" method="POST">
+        Topic: <input type="text" name="title" required> 
+        Marks: <input type="number" name="marks" required> 
+        Date: <input type="date" name="deadline" required>
+        <button type="submit">Post</button>
+    </form>
+
+    <h3>All Assignments</h3>
+    <table>
+        <tr>
+            <th>Topic</th>
+            <th>Total Marks</th>
+            <th>Deadline</th>
+        </tr>
+        <% assignments.forEach(task => { %>
+        <tr>
+            <td><%= task.title %></td>
+            <td><%= task.marks %></td>
+            <td><%= task.deadline %></td>
+        </tr>
+        <% }) %>
+    </table>
+
+    <h3 style="margin-top: 50px;">Student Submissions</h3>
+    <table>
+        <tr>
+            <th>Student Name</th>
+            <th>Assignment</th>
+            <th>File</th>
+            <th>Current Grade</th>
+            <th>Action</th>
+        </tr>
+        <% submissions.forEach((sub) => { %>
+        <tr>
+            <td><%= sub.studentName %></td>
+            <td><%= sub.assignmentTitle %></td>
+            <td>
+                <a href="/uploads/<%= sub.filename %>" target="_blank">Open PDF</a>
+            </td>
+            <td>
+                <b><%= sub.grade %></b>
+            </td>
+            <td>
+                <form action="/grade-submission" method="POST" style="margin: 0;">
+                    <input type="hidden" name="submissionID" value="<%= sub._id %>">
+                    <input type="text" name="newGrade" placeholder="Marks" size="5" required>
+                    <button type="submit">Save</button>
+                </form>
+            </td>
+        </tr>
+        <% }) %>
+    </table>
+
+</body>
+</html>

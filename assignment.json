@@ -1,0 +1,21 @@
+{
+  "assignments": [
+    {
+      "title": "test-1",
+      "marks": "50",
+      "deadline": "2026-04-02"
+    },
+    {
+      "title": "test-2",
+      "marks": "10",
+      "deadline": "2026-03-25"
+    }
+  ],
+  "submissions": [
+    {
+      "studentName": "Shalin Bhandari",
+      "assignmentTitle": "test-1",
+      "filename": "1774867078851.pdf"
+    }
+  ]
+}

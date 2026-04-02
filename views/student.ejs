@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Page</title>
+    <style>
+        table {
+            border-collapse: collapse; 
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+        }
+        .status-graded {
+            color: green;
+            font-weight: bold;
+        }
+        .status-pending {
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Available Assignments</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Topic</th>
+                <th>Max Marks</th>
+                <th>Deadline</th>
+                <th>Upload Submission</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% assignments.forEach(task => { %>
+                <tr>
+                    <td><%= task.title %></td>
+                    <td><%= task.marks %></td>
+                    <td><%= task.deadline %></td>
+                    <td>
+                        <form action="/upload" method="POST" enctype="multipart/form-data" style="margin: 0;">
+                            <input type="hidden" name="assignmentTitle" value="<%= task.title %>">
+                            <input type="text" name="studentName" placeholder="Your Name" required>
+                            <input type="file" name="assignmentFile" accept="application/pdf" required>
+                            <button type="submit">Submit PDF</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+
+    <h2 style="margin-top: 50px;">My Grades</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Assignment Name</th>
+                <th>Student</th>
+                <th>Status / Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% submissions.forEach(sub => { %>
+                <tr>
+                    <td><%= sub.assignmentTitle %></td>
+                    <td><%= sub.studentName %></td>
+                    <td>
+                        <% if (sub.grade === "Pending") { %>
+                            <span class="status-pending">Waiting for Marks</span>
+                        <% } else { %>
+                            <span class="status-graded">Graded: <%= sub.grade %></span>
+                        <% } %>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+
+</body>
+</html>
