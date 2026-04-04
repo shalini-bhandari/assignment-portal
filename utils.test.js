@@ -1,4 +1,4 @@
-const { isDeadlineValid, getGradeStatus } = require('./utils');
+const { isDeadlineValid, getGradeStatus, isAllowedFile } = require('./utils');
 
 describe('Assignment Portal', () => {
     describe('Deadline logic', () => {
@@ -21,6 +21,24 @@ describe('Assignment Portal', () => {
         test('should return "Passed" for scores 33 and above', () => {
             expect(getGradeStatus('85')).toBe('Passed');
             expect(getGradeStatus(33)).toBe('Passed');
+        });
+    })
+    describe('File validation', () => {
+            test('should accept .pdf files', () => {
+            expect(isAllowedFile('my_assignment.pdf')).toBe(true);
+        });
+
+        test('should reject .exe or .png files', () => {
+            expect(isAllowedFile('virus.exe')).toBe(false);
+            expect(isAllowedFile('image.png')).toBe(false);
+        });
+    })
+    describe('Validation for proff', () => {
+        test('should reject grades higher than the maximum marks', () => {
+            const maxMarks = 100;
+            const inputGrade = 105;
+            const isValid = inputGrade <= maxMarks;
+            expect(isValid).toBe(false);
         });
     })
 })

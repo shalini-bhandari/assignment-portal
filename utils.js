@@ -16,4 +16,10 @@ function getGradeStatus(grade) {
     return 'Failed';
 }
 
-module.exports = { isDeadlineValid, getGradeStatus };
+function isAllowedFile(filename) {
+    const allowedExtensions = ['.pdf', '.docx'];
+    const extension = filename.slice(filename.lastIndexOf('.')).toLowerCase();
+    return allowedExtensions.includes(extension);
+}
+
+module.exports = { isDeadlineValid, getGradeStatus, isAllowedFile };
