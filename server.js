@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const routes = require('./routes/index');
 const app = express();
+const session = require('express-session');
 
 mongoose.connect('mongodb://127.0.0.1:27017/assignmentDB')
     .then(() => console.log("Connected to MongoDB"))
@@ -12,6 +13,13 @@ app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.use('/uploads', express.static('uploads'));
 
+app.use(session ({
+    secret: 'shalini060901',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {maxAge: 600000}
+}))
+
 app.use('/', routes);
 
-app.listen(3000, () => console.log('Server: http://localhost:3000/professor'));
+app.listen(3000, () => console.log('Server: http://localhost:3000/login'));
